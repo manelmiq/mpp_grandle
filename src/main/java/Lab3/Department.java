@@ -48,13 +48,17 @@ public class Department {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Department)) return false;
-        Department department = (Department) o;
-        return Objects.equals(getLocation(), department.getLocation()) &&
-                Double.compare(getSalary(), department.getSalary()) == 0 &&
-                Objects.equals(getName(), department.getName());
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(positionList, that.positionList);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, location, positionList);
+    }
 
     @Override
     public String toString() {

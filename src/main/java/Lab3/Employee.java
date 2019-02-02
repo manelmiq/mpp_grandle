@@ -1,5 +1,7 @@
 package Lab3;
 
+import com.github.javafaker.Faker;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,9 +18,9 @@ public class Employee {
         EmployeeId = employeeId;
         this.firstName = firstName;
         this.SSN = SSN;
-
     }
 
+    public Employee(){}
 
     public Employee(int employeeId, String firstName, String middleInitial, String lastName, Date birthDate, String SSN, double salary) {
         EmployeeId = employeeId;
@@ -84,9 +86,15 @@ public class Employee {
 
     public void setSalary(double salary) {
         this.salary = salary;
-
-
     }
+
+    public void fillRandomData(){
+        Faker faker = new Faker();
+        this.setLastName(faker.name().lastName());
+        this.setFirstName(faker.name().firstName());
+        this.setSalary(faker.random().nextDouble());
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -104,7 +112,13 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEmployeeId(), getFirstName(), getMiddleInitial(), getLastName(), getBirthDate(), getSSN(), getSalary());
+        return Objects.hash(getEmployeeId(), getFirstName(), getMiddleInitial(),
+                getLastName(), getBirthDate(), getSSN(), getSalary());
+    }
+
+    @Override
+    protected Employee clone() throws CloneNotSupportedException {
+        return new Employee(this.getEmployeeId(), this.getFirstName(), this.getSSN() );
     }
 
     public void print(){

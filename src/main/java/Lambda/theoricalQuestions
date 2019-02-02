@@ -1,0 +1,20 @@
+1. Short answer
+
+a. Name the differences between imperative and functional programming
+
+Imperative programming is the most dominant paradigm of programming.
+Its when you use loops and other to create your programming
+The main difference between imperative and functional languages is that functions that are evaluated are the
+main way of gaining and transforming data,
+functional programming is stateless. Rather than assigning values which can then be mutated like what happens
+in imperative languages, the value returned by a function is only dependent on its input.
+
+
+
+b. Explain the meaning of declarative programming. Give an example.
+
+
+
+
+
+c. Name the benefits of including functional style programming in Java
