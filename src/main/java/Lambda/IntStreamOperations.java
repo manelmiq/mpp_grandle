@@ -3,12 +3,10 @@
 package Lambda;
 
 import java.util.Arrays;
-import java.util.stream.Collector;
-import java.util.stream.IntStream;
+import java.util.stream.*;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -131,7 +129,7 @@ class ArraysAndStreams2 {
 // strings greater than "m" (case insensitive) sorted descending
         System.out.printf("strings greater than m sorted descending: %s%n",
                 Arrays.stream(strings)
-                        .filter(s -> s.compareToIgnoreCase("m") > 0)
+                        .filter(s -> (s.compareToIgnoreCase("m") > 0))
                         .sorted(String.CASE_INSENSITIVE_ORDER.reversed())
                         .collect(Collectors.toList()));
     }
@@ -336,9 +334,10 @@ Sales 12
         System.out.println("2)Print out all of the Employee " +
                 "objects whose last name begins with the letter ‘B’in sorted order.");
         list.stream()
-                .filter(lastNameB)
-                .sorted(Comparator.comparing(Employee::getLastName))
+                .filter(s->(s.getLastName().startsWith("B")))
+                .sorted(Comparator.comparing(Employee::getLastName ))
                 .forEach(System.out::println);
+
         System.out.println(
                 "3)Print out all of the Employee objects whose last name begins with the " + "letter ‘B’and change their first" +
                         " name and last name to be All capital letters.");
@@ -363,21 +362,46 @@ Sales 12
         System.out.println(list.stream()
                 .map(Employee::toString)
                 .collect(Collectors.joining()));
-        System.out.println("4.2)Use the Collectors.joining method to print out All Employee objects, and separate each one with a delimeter");
+        System.out.println("4.2)Use the Collectors.joining method " +
+                "to print out All Employee objects, and separate each one with a delimeter");
         System.out.println(list.stream()
                 .map(Employee::toString)
                 .collect(Collectors.joining(",")));
-        System.out.println("5)Print out all of the Employee objects’last names, whose last name begins with the letter ‘I’in sorted     order, and get rid of all the duplicates.Print out only the last names.");
-       System.out.println(list.stream()
-               .map(Employee::getLastName)
+        System.out.println("5)Print out all of the Employee objects’last names," +
+                " whose last name begins with the letter ‘I’in sorted order, " +
+                "and get rid of all the duplicates.Print out only the last names.");
+        System.out.println(list.stream()
+                .filter(s -> (s.getLastName().startsWith("I")))
+                .map(Employee::getLastName)
+                .distinct()
+                .sorted()
+                .collect(Collectors.joining(",")));
+        System.out.println("6)Print out the average of all the salaries.");
+        System.out.println(
+                list.stream()
+                        .mapToDouble(Employee::getSalary)
+                        .summaryStatistics().getAverage()
+        );
+        System.out.println("7)Use the ‘reduce’method to print out the total salary of all employees.");
+        System.out.println(list.stream()
+                .mapToDouble(Employee::getSalary)
+                .reduce(
+                        0.0,
+                        (a, b) -> a + b)
+        );
+        System.out.println("8)Print out only the first names of all the employees.Use the ‘map’method to accomplish this.");
+        System.out.println(
+                list.stream()
+                        .map(Employee::getFirstName)
+                        .collect(Collectors.joining(", "))
+        );
+        System.out.println("9)Create an infinite stream of even numbers(0, 2, 4, …) and then, eventually print out only the first 20 even numbers from this stream.");
 
-               .collect(Collectors.joining(",")));
+        Stream<Integer> integerList = Stream.iterate(0, i -> i + 2);
+        System.out.println(integerList.limit(20).collect(Collectors.toList()));
 
-//        6)Print out the average of all the salaries.
-//        7)Use the ‘reduce’method to print out the total salary of all employees.
-//        8)Print out only the first names of all the employees.Use the ‘map’method to accomplish this.
-//        9)Create an infinite stream of even numbers(0, 2, 4, …) and then, eventually print out only the first 20
-//        even numbers from this stream.
+
+
     } // end main
 } // end class ProcessingEmployees
 //************************************************************
